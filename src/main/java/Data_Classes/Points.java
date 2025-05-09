@@ -1,12 +1,14 @@
 package Data_Classes;
 
-public class Points implements Payment{
+public class Points implements Payment
+{
 
     private String id;
     private float discount;
     private float limit;
 
-    public Points(String id, float discount, float limit) {
+    public Points(String id, float discount, float limit)
+    {
         this.id = id;
         this.discount = discount;
         this.limit = limit;
@@ -23,6 +25,9 @@ public class Points implements Payment{
     public float getLimit() {
         return limit;
     }
+
+
+
     @Override
     public float calculate()
     {

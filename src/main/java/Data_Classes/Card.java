@@ -22,6 +22,8 @@ public class Card implements Payment {
     public float getLimit() {
         return limit;
     }
+
+
     @Override
     public float calculate()
     {
