@@ -1,4 +1,4 @@
-package File_Reader;
+package filereader;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,11 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public abstract class ReaderBase<T> {
+public abstract class FileReader<T> {
 
     protected String filename;
 
-    public ReaderBase(String filename) {
+    public FileReader(String filename) {
         this.filename = filename;
     }
 

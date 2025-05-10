@@ -1,6 +1,6 @@
-package File_Reader;
+package filereader;
 
-import Data_Classes.Payment;
+import dataclass.baseitem.Payment;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

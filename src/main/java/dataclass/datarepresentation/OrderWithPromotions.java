@@ -1,6 +1,7 @@
-package DataBinders;
+package dataclass.datarepresentation;
 
-import Data_Classes.Payment;
+import dataclass.baseitem.Payment;
+
 import java.util.List;
 
 public class OrderWithPromotions {

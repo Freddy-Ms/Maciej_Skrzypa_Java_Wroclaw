@@ -1,13 +1,14 @@
-package DataBinders;
+package databinder;
 
-import Data_Classes.Order;
-import Data_Classes.Payment;
+import dataclass.baseitem.Order;
+import dataclass.baseitem.Payment;
+import dataclass.datarepresentation.PaymentWithOrders;
 import org.example.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentOrderBinder {
+public class PaymentToOrders {
 
     public List<PaymentWithOrders> bind(List<Payment> payments, List<Order> orders) {
         List<PaymentWithOrders> paymentWithOrders = new ArrayList<>();

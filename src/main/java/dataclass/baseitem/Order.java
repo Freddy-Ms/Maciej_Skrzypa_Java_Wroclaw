@@ -1,4 +1,4 @@
-package Data_Classes;
+package dataclass.baseitem;
 
 import java.util.List;
 
@@ -33,12 +33,14 @@ public class Order {
         return promotions;
     }
 
-    public void bought(){
+    public void buy(){
         this.value = 0;
     }
+
     public void pay(float value){
         this.value -= value;
     }
+
     public void discount(){
         this.value -= this.value * 0.1f;
     }

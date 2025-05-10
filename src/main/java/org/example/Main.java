@@ -1,16 +1,18 @@
 package org.example;
 
-import DataBinders.OrderPaymentBinder;
-import DataBinders.OrderWithPromotions;
-import DataBinders.PaymentOrderBinder;
-import DataBinders.PaymentWithOrders;
-import Data_Classes.Payment;
-import Data_Classes.Order;
-import File_Reader.OrderReader;
-import File_Reader.PaymentReader;
-import Solver.Solver;
-import Solver.PaymentWithOrdersSolver;
-import Solver.OrderWithPromotionsSolver;
+import databinder.OrderToPayments;
+import dataclass.datarepresentation.OrderWithPromotions;
+import databinder.PaymentToOrders;
+import dataclass.datarepresentation.PaymentWithOrders;
+import dataclass.baseitem.Payment;
+import dataclass.baseitem.Order;
+import filereader.OrderReader;
+import filereader.PaymentReader;
+import solver.Solver;
+import solver.PaymentWithOrdersSolver;
+import solver.OrderWithPromotionsSolver;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
@@ -30,11 +32,11 @@ public class Main {
             List<Order> orders = orderReader.read();
             List<Payment> payments = paymentReader.read();
 
-            PaymentOrderBinder paymentBinder = new PaymentOrderBinder();
-            OrderPaymentBinder orderPaymentBinder = new OrderPaymentBinder();
+            PaymentToOrders paymentBinder = new PaymentToOrders();
+            OrderToPayments orderToPayments = new OrderToPayments();
 
             List<PaymentWithOrders> paymentWithOrders = paymentBinder.bind(payments,orders);
-            List<OrderWithPromotions> ordersWithPromotions = orderPaymentBinder.bind(orders,payments);
+            List<OrderWithPromotions> ordersWithPromotions = orderToPayments.bind(orders,payments);
 
             Solver<PaymentWithOrders,Order> paymentOrderSolver = new PaymentWithOrdersSolver();
             Solver<OrderWithPromotions, Payment> orderPaymentSolver = new OrderWithPromotionsSolver();

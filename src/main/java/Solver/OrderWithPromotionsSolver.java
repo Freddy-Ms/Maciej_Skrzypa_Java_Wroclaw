@@ -1,10 +1,10 @@
-package Solver;
+package solver;
 
-import DataBinders.OrderWithPromotions;
+import dataclass.datarepresentation.OrderWithPromotions;
 
 import java.util.*;
 
-import Data_Classes.Payment;
+import dataclass.baseitem.Payment;
 import org.example.Config;
 
 public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Payment> {
@@ -44,14 +44,14 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                 if(pointsAvailable >= tenPercentOfOrder) {
                     float remainingPointsAfter10Percent = pointsAvailable - tenPercentOfOrder;
 
-                    boolean canCoverOtherOders = orders.stream()
+                    boolean canCoverOtherOrders = orders.stream()
                             .filter(o -> o.value() > 0)
                             .anyMatch(o -> {
                                 float order10Percent = o.value() * 0.1f;
                                 return remainingPointsAfter10Percent >= order10Percent && order != o;
                             });
 
-                    if (canCoverOtherOders) {
+                    if (canCoverOtherOrders) {
                         order.discount();
                         order.pay(tenPercentOfOrder);
                         pointsPayment.pay(tenPercentOfOrder);

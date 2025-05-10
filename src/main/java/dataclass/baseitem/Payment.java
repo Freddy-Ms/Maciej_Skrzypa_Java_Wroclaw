@@ -1,6 +1,7 @@
-package Data_Classes;
+package dataclass.baseitem;
 
 public interface Payment {
+
     float calculateDiscount(float value);
 
     public String id();
@@ -9,8 +10,7 @@ public interface Payment {
 
     public float limit();
 
-    public boolean canPay(float value);
-
     public void pay(float value);
 
 }
+

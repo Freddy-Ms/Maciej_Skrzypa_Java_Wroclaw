@@ -1,4 +1,4 @@
-package Data_Classes;
+package dataclass.baseitem;
 
 public class Card implements Payment {
     private String id;
@@ -30,11 +30,6 @@ public class Card implements Payment {
     public float calculateDiscount(float value)
     {
         return this.discount * value / 100;
-    }
-
-    @Override
-    public boolean canPay(float value) {
-        return limit >= value;
     }
 
     @Override

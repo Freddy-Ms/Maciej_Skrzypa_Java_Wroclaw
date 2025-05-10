@@ -1,8 +1,8 @@
-package Solver;
+package solver;
 
-import DataBinders.PaymentWithOrders;
-import Data_Classes.Order;
-import Data_Classes.Payment;
+import dataclass.datarepresentation.PaymentWithOrders;
+import dataclass.baseitem.Order;
+import dataclass.baseitem.Payment;
 import org.example.Config;
 
 import java.util.*;
@@ -12,7 +12,6 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
     @Override
     public Map<String, Float> solve(List<PaymentWithOrders> paymentsWithOrders, List<Order> orders) {
         Map<String, Float> result = new HashMap<>();
-
 
         paymentsWithOrders.sort((p1, p2) -> Float.compare(p2.getPayment().limit(), p1.getPayment().limit()));
 
@@ -25,7 +24,7 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
                 float amountToPay = order.value() - pwo.getPayment().calculateDiscount(order.value());
                 if (pwo.getPayment().limit() >= amountToPay) {
                     pwo.getPayment().pay(amountToPay);
-                    order.bought();
+                    order.buy();
                     result.put(pwo.getPayment().id(), result.getOrDefault(pwo.getPayment().id(), 0.0f) + amountToPay);
                     break;
                 }
@@ -119,7 +118,7 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
                 result.put(payment.id(), result.getOrDefault(payment.id(), 0.0f) + amountToPay);
 
                 if (order.value() == 0) {
-                    order.bought();
+                    order.buy();
                 }
             }
         }

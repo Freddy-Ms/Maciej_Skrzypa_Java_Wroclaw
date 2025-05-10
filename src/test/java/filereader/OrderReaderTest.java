@@ -1,6 +1,6 @@
-package File_Reader;
+package filereader;
 
-import Data_Classes.Order;
+import dataclass.baseitem.Order;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -12,7 +12,7 @@ class OrderReaderTest {
     String valid_orders_path = "src/test/instances/Orders/orders.json";
 
     @Test
-    public void ordersNotTable(){
+    public void ordersNotArray(){
         String filePath = "src/test/instances/Orders/orders1.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();
@@ -40,7 +40,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void ordersTooNanyElements() {
+    public void ordersTooManyElements() {
         String filePath = "src/test/instances/Orders/orders3.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();
@@ -58,7 +58,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void promotionsNotInTable()
+    public void promotionsNotInArray()
     {
         String filePath = "src/test/instances/Orders/orders6.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {

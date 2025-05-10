@@ -1,12 +1,12 @@
-package File_Reader;
+package filereader;
 
-import Data_Classes.Order;
+import dataclass.baseitem.Order;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderReader extends ReaderBase<List<Order>> {
+public class OrderReader extends FileReader<List<Order>> {
 
     public OrderReader(String filename) {
         super(filename);

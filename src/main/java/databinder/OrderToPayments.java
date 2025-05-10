@@ -1,12 +1,13 @@
-package DataBinders;
-import Data_Classes.Order;
-import Data_Classes.Payment;
+package databinder;
+import dataclass.baseitem.Order;
+import dataclass.datarepresentation.OrderWithPromotions;
+import dataclass.baseitem.Payment;
 import org.example.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderPaymentBinder {
+public class OrderToPayments {
     public List<OrderWithPromotions> bind(List<Order> orders, List<Payment> payments) {
         List<OrderWithPromotions> result = new ArrayList<>();
         for (Order order : orders) {

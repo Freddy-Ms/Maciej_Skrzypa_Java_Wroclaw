@@ -1,15 +1,15 @@
-package File_Reader;
+package filereader;
 
-import Data_Classes.Card;
-import Data_Classes.Payment;
-import Data_Classes.Points;
+import dataclass.baseitem.Card;
+import dataclass.baseitem.Payment;
+import dataclass.baseitem.Points;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.example.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaymentReader extends ReaderBase<List<Payment>> {
+public class PaymentReader extends FileReader<List<Payment>> {
 
     public PaymentReader(String filename)
     {

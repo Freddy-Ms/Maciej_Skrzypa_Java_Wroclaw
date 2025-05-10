@@ -1,20 +1,21 @@
-package DataBinders;
+package databinder;
 
-import Data_Classes.Payment;
-import Data_Classes.Order;
-import File_Reader.OrderReader;
-import File_Reader.PaymentReader;
+import dataclass.datarepresentation.OrderWithPromotions;
+import dataclass.baseitem.Payment;
+import dataclass.baseitem.Order;
+import filereader.OrderReader;
+import filereader.PaymentReader;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class orderPaymentBinderTest {
-    OrderPaymentBinder binder = new OrderPaymentBinder();
+class OrderPaymentBinderTest {
+    OrderToPayments binder = new OrderToPayments();
 
     @Test
-    void PaymentIdNotFound() {
+    void paymentIdNotFound() {
         OrderReader orderReader = new OrderReader("src/test/instances/Orders/orders7.json");
         PaymentReader paymentReader = new PaymentReader("src/test/instances/Payment/paymentmethods.json");
 

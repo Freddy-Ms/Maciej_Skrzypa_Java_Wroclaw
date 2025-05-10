@@ -1,4 +1,4 @@
-package Data_Classes;
+package dataclass.baseitem;
 
 public class Points implements Payment
 {
@@ -36,10 +36,6 @@ public class Points implements Payment
         return this.discount * value / 100;
     }
 
-    @Override
-    public boolean canPay(float value) {
-        return limit >= value;
-    }
 
     @Override
     public void pay(float value) {

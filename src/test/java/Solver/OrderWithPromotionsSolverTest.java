@@ -1,11 +1,11 @@
-package Solver;
+package solver;
 
-import DataBinders.OrderPaymentBinder;
-import DataBinders.OrderWithPromotions;
-import Data_Classes.Order;
-import Data_Classes.Payment;
-import File_Reader.OrderReader;
-import File_Reader.PaymentReader;
+import databinder.OrderToPayments;
+import dataclass.datarepresentation.OrderWithPromotions;
+import dataclass.baseitem.Order;
+import dataclass.baseitem.Payment;
+import filereader.OrderReader;
+import filereader.PaymentReader;
 import org.example.Config;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 class OrderWithPromotionsSolverTest {
-    OrderPaymentBinder binder = new OrderPaymentBinder();
+    OrderToPayments binder = new OrderToPayments();
     OrderWithPromotionsSolver solver = new OrderWithPromotionsSolver();
 
 

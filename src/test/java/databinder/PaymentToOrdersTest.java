@@ -1,9 +1,10 @@
-package DataBinders;
+package databinder;
 
-import Data_Classes.Order;
-import Data_Classes.Payment;
-import File_Reader.OrderReader;
-import File_Reader.PaymentReader;
+import dataclass.baseitem.Order;
+import dataclass.baseitem.Payment;
+import dataclass.datarepresentation.PaymentWithOrders;
+import filereader.OrderReader;
+import filereader.PaymentReader;
 import org.example.Config;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class PaymentOrderBinderTest {
+class PaymentToOrdersTest {
 
     @Test
     void bindAllOrdersToPointsPayment() {
@@ -21,7 +22,7 @@ class PaymentOrderBinderTest {
         List<Order> orders = orderReader.read();
         List<Payment> payments = paymentReader.read();
 
-        PaymentOrderBinder binder = new PaymentOrderBinder();
+        PaymentToOrders binder = new PaymentToOrders();
 
         List<PaymentWithOrders> result = binder.bind(payments,orders);
 
@@ -45,7 +46,7 @@ class PaymentOrderBinderTest {
         List<Order> orders = orderReader.read();
         List<Payment> payments = paymentReader.read();
 
-        PaymentOrderBinder binder = new PaymentOrderBinder();
+        PaymentToOrders binder = new PaymentToOrders();
         List<PaymentWithOrders> result = binder.bind(payments, orders);
 
         for (PaymentWithOrders pwo : result) {
