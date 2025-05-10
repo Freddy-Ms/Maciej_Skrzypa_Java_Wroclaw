@@ -60,7 +60,7 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                                 result.getOrDefault(pointsPayment.getId(), 0.0f) + tenPercentOfOrder
                         );
 
-                        payRemainingExcludingPoints(order,result,paymentMethods);
+                        payRemaining(order,result,paymentMethods,true);
                     } else {
                         order.discount();
                         order.pay(pointsAvailable);
@@ -70,7 +70,7 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                                 result.getOrDefault(pointsPayment.getId(), 0.0f) + pointsAvailable
                         );
                         if(order.value() > 0)
-                            payRemaining(order,result,paymentMethods);
+                            payRemaining(order,result,paymentMethods,false);
                     }
                 } else{
 
@@ -99,7 +99,7 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                                 result.getOrDefault(pointsPayment.getId(), 0.0f) + toPayWithPoints
                         );
                         if(order.value() > 0)
-                            payRemaining(order,result,paymentMethods);
+                            payRemaining(order,result,paymentMethods,false);
                     }
                 }
             }
@@ -108,19 +108,10 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
         return result;
     }
 
-    private void payRemainingExcludingPoints(OrderWithPromotions order, Map<String, Float> result, List<Payment> paymentMethods) {
-        for(Payment payment : paymentMethods) {
-            if(!payment.getId().equals(Config.POINTS) && order.value() > 0 && payment.getLimit() > 0) {
-                float amountToPay = Math.min(payment.getLimit(), order.value());
-                payment.pay(amountToPay);
-                order.pay(amountToPay);
-                result.put(payment.getId(), result.getOrDefault(payment.getId(), 0.0f) + amountToPay);
-            }
-        }
-    }
-    private void payRemaining(OrderWithPromotions order, Map<String, Float> result, List<Payment> paymentMethods) {
+    private void payRemaining(OrderWithPromotions order, Map<String, Float> result, List<Payment> paymentMethods, boolean excludePoints) {
         for(Payment payment : paymentMethods) {
             if(order.value() > 0 && payment.getLimit() > 0) {
+                if(excludePoints && payment.getId().equals(Config.POINTS)) {continue;}
                 float amountToPay = Math.min(payment.getLimit(), order.value());
                 payment.pay(amountToPay);
                 order.pay(amountToPay);

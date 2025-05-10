@@ -26,13 +26,13 @@ class PaymentOrderBinderTest {
         List<PaymentWithOrders> result = binder.bind(payments,orders);
 
         PaymentWithOrders pointsBiding = result.stream()
-                .filter(pwo -> pwo.payment().getId().equals(Config.POINTS))
+                .filter(pwo -> pwo.getPayment().getId().equals(Config.POINTS))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Points payment not found"));
 
-        assertEquals(orders.size(),pointsBiding.orders().size());
+        assertEquals(orders.size(),pointsBiding.getOrders().size());
 
-        pointsBiding.orders().forEach(order -> {
+        pointsBiding.getOrders().forEach(order -> {
             assertTrue(order.promotions().contains(Config.POINTS));
         });
 
@@ -49,9 +49,9 @@ class PaymentOrderBinderTest {
         List<PaymentWithOrders> result = binder.bind(payments, orders);
 
         for (PaymentWithOrders pwo : result) {
-            for (Order order : pwo.orders()) {
-                if (!pwo.payment().getId().equals(Config.POINTS)) {
-                    assertTrue(order.promotions().contains(pwo.payment().getId()));
+            for (Order order : pwo.getOrders()) {
+                if (!pwo.getPayment().getId().equals(Config.POINTS)) {
+                    assertTrue(order.promotions().contains(pwo.getPayment().getId()));
                 }
             }
         }

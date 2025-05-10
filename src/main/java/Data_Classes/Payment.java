@@ -12,4 +12,5 @@ public interface Payment {
     public boolean canPay(float value);
 
     public void pay(float value);
+
 }

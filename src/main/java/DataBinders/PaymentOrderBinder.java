@@ -19,7 +19,7 @@ public class PaymentOrderBinder {
                 if(Config.POINTS.equals(payment.getId())) {
                     matchedOrders.add(addPoints(order));
                 }
-                else if (order.promotions().contains(payment.getId())) {
+                else if (order.promotions() != null && order.promotions().contains(payment.getId())) {
                     matchedOrders.add(order);
                 }
             }
@@ -30,7 +30,7 @@ public class PaymentOrderBinder {
     }
 
     private Order addPoints(Order order) {
-        List<String> updatedPromotions = new ArrayList<>(order.promotions());
+        List<String> updatedPromotions = order.promotions() != null ? new ArrayList<>(order.promotions()) : new ArrayList<>();
         updatedPromotions.add(Config.POINTS);
         return new Order(order.id(), order.value(), updatedPromotions);
     }

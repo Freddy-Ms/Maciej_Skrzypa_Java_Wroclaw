@@ -92,6 +92,6 @@ class OrderReaderTest {
         Order order4 = orders.get(3);
         assertEquals("ORDER4", order4.id());
         assertEquals(50, order4.value());
-        assertTrue(order4.promotions().isEmpty());
+        assertNull(order4.promotions());
     }
 }
