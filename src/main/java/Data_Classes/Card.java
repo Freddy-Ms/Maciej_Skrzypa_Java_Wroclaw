@@ -10,24 +10,26 @@ public class Card implements Payment {
         this.discount = discount;
         this.limit = limit;
     }
+
     @Override
     public String getId() {
         return id;
     }
+
     @Override
     public float getDiscount() {
         return discount;
     }
+
     @Override
     public float getLimit() {
         return limit;
     }
 
-
     @Override
-    public float calculate()
+    public float calculateDiscount(float value)
     {
-        return 1;
+        return this.discount * value / 100;
     }
 
 }

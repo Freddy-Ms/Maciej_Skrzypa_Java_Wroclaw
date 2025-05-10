@@ -1,7 +1,7 @@
 package Data_Classes;
 
 public interface Payment {
-    float calculate();
+    float calculateDiscount(float value);
 
     public String getId();
 

@@ -29,8 +29,8 @@ public class Points implements Payment
 
 
     @Override
-    public float calculate()
+    public float calculateDiscount(float value)
     {
-        return 1;
+        return this.discount * value / 100;
     }
 }
