@@ -12,8 +12,7 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
     @Override
     public Map<String, Float> solve(List<PaymentWithOrders> paymentsWithOrders, List<Order> orders) {
         Map<String, Float> result = new HashMap<>();
-        Map<String, Order> orderById = orders.stream()
-                .collect(Collectors.toMap(Order::id, o -> o));
+
 
         paymentsWithOrders.sort((p1, p2) -> Float.compare(p2.getPayment().getLimit(), p1.getPayment().getLimit()));
 
@@ -21,13 +20,12 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
             pwo.getOrders().sort((o1, o2) -> Float.compare(o2.value(), o1.value()));
 
             for (Order order : pwo.getOrders()) {
-                Order originalOrder = orderById.get(order.id());
-                if (originalOrder == null || originalOrder.value() == 0) continue;
+                if (order == null || order.value() == 0) continue;
 
-                float amountToPay = originalOrder.value() - pwo.getPayment().calculateDiscount(originalOrder.value());
+                float amountToPay = order.value() - pwo.getPayment().calculateDiscount(order.value());
                 if (pwo.getPayment().getLimit() >= amountToPay) {
                     pwo.getPayment().pay(amountToPay);
-                    originalOrder.bought();
+                    order.bought();
                     result.put(pwo.getPayment().getId(), result.getOrDefault(pwo.getPayment().getId(), 0.0f) + amountToPay);
                     break;
                 }

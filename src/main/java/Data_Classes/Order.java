@@ -17,6 +17,9 @@ public class Order {
         this.id = id;
         this.value = value;
     }
+    public void setPromotions(List<String> promotions) {
+        this.promotions = promotions;
+    }
 
     public String id(){
         return id;
