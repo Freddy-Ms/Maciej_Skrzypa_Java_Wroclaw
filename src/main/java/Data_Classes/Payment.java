@@ -8,4 +8,8 @@ public interface Payment {
     public float getDiscount();
 
     public float getLimit();
+
+    public boolean canPay(float value);
+
+    public void pay(float value);
 }
