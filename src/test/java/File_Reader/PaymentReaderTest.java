@@ -1,8 +1,6 @@
 package File_Reader;
 
-import Data_Classes.Card;
 import Data_Classes.Payment;
-import Data_Classes.Points;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
