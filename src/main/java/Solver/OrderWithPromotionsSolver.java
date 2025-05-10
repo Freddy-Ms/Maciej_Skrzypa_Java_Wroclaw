@@ -16,14 +16,14 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
         orders.sort((o1, o2) -> Float.compare(o2.value(), o1.value()));
 
         for(OrderWithPromotions order : orders){
-            order.promotions().sort((p1, p2) -> Float.compare(p2.getDiscount(), p1.getDiscount()));
+            order.promotions().sort((p1, p2) -> Float.compare(p2.discount(), p1.discount()));
 
             for(Payment payment : order.promotions()) {
                 float amountToPay = order.value() - payment.calculateDiscount(order.value());
-                if(payment.getLimit() >= amountToPay) {
+                if(payment.limit() >= amountToPay) {
                     payment.pay(amountToPay);
                     order.bought();
-                    result.put(payment.getId(), result.getOrDefault(payment.getId(), 0.0f) + amountToPay);
+                    result.put(payment.id(), result.getOrDefault(payment.id(), 0.0f) + amountToPay);
                     break;
                 }
             }
@@ -33,12 +33,12 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
             if(order.value() == 0) continue;
 
             Payment pointsPayment = order.promotions().stream()
-                    .filter(p -> p.getId().equals(Config.POINTS))
+                    .filter(p -> p.id().equals(Config.POINTS))
                     .findFirst().orElse(null);
 
-            if(pointsPayment != null && pointsPayment.getLimit() > 0) {
+            if(pointsPayment != null && pointsPayment.limit() > 0) {
                 float orderValue = order.value();
-                float pointsAvailable = pointsPayment.getLimit();
+                float pointsAvailable = pointsPayment.limit();
                 float tenPercentOfOrder = orderValue * 0.1f;
 
                 if(pointsAvailable >= tenPercentOfOrder) {
@@ -56,8 +56,8 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                         order.pay(tenPercentOfOrder);
                         pointsPayment.pay(tenPercentOfOrder);
                         result.put(
-                                pointsPayment.getId(),
-                                result.getOrDefault(pointsPayment.getId(), 0.0f) + tenPercentOfOrder
+                                pointsPayment.id(),
+                                result.getOrDefault(pointsPayment.id(), 0.0f) + tenPercentOfOrder
                         );
 
                         payRemaining(order,result,paymentMethods,true);
@@ -66,8 +66,8 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                         order.pay(pointsAvailable);
                         pointsPayment.pay(pointsAvailable);
                         result.put(
-                                pointsPayment.getId(),
-                                result.getOrDefault(pointsPayment.getId(), 0.0f) + pointsAvailable
+                                pointsPayment.id(),
+                                result.getOrDefault(pointsPayment.id(), 0.0f) + pointsAvailable
                         );
                         if(order.value() > 0)
                             payRemaining(order,result,paymentMethods,false);
@@ -83,8 +83,8 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                                 pointsPayment.pay(tenPercent);
 
                                 result.put(
-                                        pointsPayment.getId(),
-                                        result.getOrDefault(pointsPayment.getId(), 0.0f) + tenPercent
+                                        pointsPayment.id(),
+                                        result.getOrDefault(pointsPayment.id(), 0.0f) + tenPercent
                                 );
                                 pointsAvailable -= tenPercent;
                             }
@@ -95,8 +95,8 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
                         order.pay(toPayWithPoints);
                         pointsPayment.pay(toPayWithPoints);
                         result.put(
-                                pointsPayment.getId(),
-                                result.getOrDefault(pointsPayment.getId(), 0.0f) + toPayWithPoints
+                                pointsPayment.id(),
+                                result.getOrDefault(pointsPayment.id(), 0.0f) + toPayWithPoints
                         );
                         if(order.value() > 0)
                             payRemaining(order,result,paymentMethods,false);
@@ -110,12 +110,12 @@ public class OrderWithPromotionsSolver implements Solver<OrderWithPromotions, Pa
 
     private void payRemaining(OrderWithPromotions order, Map<String, Float> result, List<Payment> paymentMethods, boolean excludePoints) {
         for(Payment payment : paymentMethods) {
-            if(order.value() > 0 && payment.getLimit() > 0) {
-                if(excludePoints && payment.getId().equals(Config.POINTS)) {continue;}
-                float amountToPay = Math.min(payment.getLimit(), order.value());
+            if(order.value() > 0 && payment.limit() > 0) {
+                if(excludePoints && payment.id().equals(Config.POINTS)) {continue;}
+                float amountToPay = Math.min(payment.limit(), order.value());
                 payment.pay(amountToPay);
                 order.pay(amountToPay);
-                result.put(payment.getId(), result.getOrDefault(payment.getId(), 0.0f) + amountToPay);
+                result.put(payment.id(), result.getOrDefault(payment.id(), 0.0f) + amountToPay);
             }
         }
     }

@@ -14,15 +14,17 @@ public class Points implements Payment
         this.limit = limit;
     }
     @Override
-    public String getId() {
+    public String id() {
         return id;
     }
+
     @Override
-    public float getDiscount() {
+    public float discount() {
         return discount;
     }
+
     @Override
-    public float getLimit() {
+    public float limit() {
         return limit;
     }
 

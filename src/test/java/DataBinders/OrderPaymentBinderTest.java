@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class OrderPaymentBinderTest {
+class orderPaymentBinderTest {
     OrderPaymentBinder binder = new OrderPaymentBinder();
 
     @Test
@@ -29,7 +29,7 @@ class OrderPaymentBinderTest {
     }
 
     @Test
-    void BindOrdersWithPromotionsAndAddPoints()
+    void bindOrdersWithPromotionsAndAddPoints()
     {
         OrderReader orderReader = new OrderReader("src/test/instances/Orders/orders.json");
         PaymentReader paymentReader = new PaymentReader("src/test/instances/Payment/paymentmethods.json");

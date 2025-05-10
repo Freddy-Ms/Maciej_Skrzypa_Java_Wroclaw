@@ -4,7 +4,7 @@ import DataBinders.PaymentWithOrders;
 import Data_Classes.Order;
 import Data_Classes.Payment;
 import org.example.Config;
-import java.util.stream.Collectors;
+
 import java.util.*;
 
 public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order> {
@@ -14,7 +14,7 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
         Map<String, Float> result = new HashMap<>();
 
 
-        paymentsWithOrders.sort((p1, p2) -> Float.compare(p2.getPayment().getLimit(), p1.getPayment().getLimit()));
+        paymentsWithOrders.sort((p1, p2) -> Float.compare(p2.getPayment().limit(), p1.getPayment().limit()));
 
         for (PaymentWithOrders pwo : paymentsWithOrders) {
             pwo.getOrders().sort((o1, o2) -> Float.compare(o2.value(), o1.value()));
@@ -23,10 +23,10 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
                 if (order == null || order.value() == 0) continue;
 
                 float amountToPay = order.value() - pwo.getPayment().calculateDiscount(order.value());
-                if (pwo.getPayment().getLimit() >= amountToPay) {
+                if (pwo.getPayment().limit() >= amountToPay) {
                     pwo.getPayment().pay(amountToPay);
                     order.bought();
-                    result.put(pwo.getPayment().getId(), result.getOrDefault(pwo.getPayment().getId(), 0.0f) + amountToPay);
+                    result.put(pwo.getPayment().id(), result.getOrDefault(pwo.getPayment().id(), 0.0f) + amountToPay);
                     break;
                 }
             }
@@ -37,13 +37,13 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
 
             Payment pointsPayment = paymentsWithOrders.stream()
                     .map(PaymentWithOrders::getPayment)
-                    .filter(p -> p.getId().equals(Config.POINTS))
+                    .filter(p -> p.id().equals(Config.POINTS))
                     .findFirst()
                     .orElse(null);
 
-            if (pointsPayment != null && pointsPayment.getLimit() > 0) {
+            if (pointsPayment != null && pointsPayment.limit() > 0) {
                 float orderValue = order.value();
-                float pointsAvailable = pointsPayment.getLimit();
+                float pointsAvailable = pointsPayment.limit();
                 float tenPercentOfOrder = orderValue * 0.1f;
 
                 if (pointsAvailable >= tenPercentOfOrder) {
@@ -60,14 +60,14 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
                         order.discount();
                         order.pay(tenPercentOfOrder);
                         pointsPayment.pay(tenPercentOfOrder);
-                        result.put(pointsPayment.getId(), result.getOrDefault(pointsPayment.getId(), 0.0f) + tenPercentOfOrder);
+                        result.put(pointsPayment.id(), result.getOrDefault(pointsPayment.id(), 0.0f) + tenPercentOfOrder);
 
                         payRemaining(order, result, paymentsWithOrders, true);
                     } else {
                         order.discount();
                         order.pay(pointsAvailable);
                         pointsPayment.pay(pointsAvailable);
-                        result.put(pointsPayment.getId(), result.getOrDefault(pointsPayment.getId(), 0.0f) + pointsAvailable);
+                        result.put(pointsPayment.id(), result.getOrDefault(pointsPayment.id(), 0.0f) + pointsAvailable);
 
                         if (order.value() > 0) {
                             payRemaining(order, result, paymentsWithOrders, false);
@@ -81,7 +81,7 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
                                 o.discount();
                                 o.pay(tenPercent);
                                 pointsPayment.pay(tenPercent);
-                                result.put(pointsPayment.getId(), result.getOrDefault(pointsPayment.getId(), 0.0f) + tenPercent);
+                                result.put(pointsPayment.id(), result.getOrDefault(pointsPayment.id(), 0.0f) + tenPercent);
                                 pointsAvailable -= tenPercent;
                             }
                         }
@@ -91,7 +91,7 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
                         float toPayWithPoints = Math.min(pointsAvailable, order.value());
                         order.pay(toPayWithPoints);
                         pointsPayment.pay(toPayWithPoints);
-                        result.put(pointsPayment.getId(), result.getOrDefault(pointsPayment.getId(), 0.0f) + toPayWithPoints);
+                        result.put(pointsPayment.id(), result.getOrDefault(pointsPayment.id(), 0.0f) + toPayWithPoints);
 
                         if (order.value() > 0) {
                             payRemaining(order, result, paymentsWithOrders, false);
@@ -109,14 +109,14 @@ public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order>
     private void payRemaining(Order order, Map<String, Float> result, List<PaymentWithOrders> paymentsWithOrders, boolean excludePoints) {
         for (PaymentWithOrders pwo : paymentsWithOrders) {
             Payment payment = pwo.getPayment();
-            if (order.value() > 0 && payment.getLimit() > 0) {
-                if (excludePoints && payment.getId().equals(Config.POINTS)) {
+            if (order.value() > 0 && payment.limit() > 0) {
+                if (excludePoints && payment.id().equals(Config.POINTS)) {
                     continue;
                 }
-                float amountToPay = Math.min(payment.getLimit(), order.value());
+                float amountToPay = Math.min(payment.limit(), order.value());
                 payment.pay(amountToPay);
                 order.pay(amountToPay);
-                result.put(payment.getId(), result.getOrDefault(payment.getId(), 0.0f) + amountToPay);
+                result.put(payment.id(), result.getOrDefault(payment.id(), 0.0f) + amountToPay);
 
                 if (order.value() == 0) {
                     order.bought();

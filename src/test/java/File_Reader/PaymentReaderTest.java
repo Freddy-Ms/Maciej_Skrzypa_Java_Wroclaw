@@ -12,7 +12,7 @@ class PaymentReaderTest {
     String valid_payment_path = "src/test/instances/Payment/paymentmethods.json";
 
     @Test
-    public void PaymentsNotTable() {
+    public void paymentsNotTable() {
         String filePath = "src/test/instances/Payment/paymentmethods1.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new PaymentReader(filePath).read();
@@ -22,7 +22,7 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void InvalidPaymentFile() {
+    public void invalidPaymentFile() {
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
             new PaymentReader("invalid_path.json").read();
         });
@@ -31,7 +31,7 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void TooManyElements() {
+    public void tooManyElements() {
         String filePath = "src/test/instances/Payment/paymentmethods2.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new PaymentReader(filePath).read();
@@ -40,7 +40,7 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void MissingRequiredElement() {
+    public void missingRequiredElement() {
         String filePath = "src/test/instances/Payment/paymentmethods3.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new PaymentReader(filePath).read();
@@ -49,7 +49,7 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void DiscountNotFloat() {
+    public void discountNotFloat() {
         String filePath = "src/test/instances/Payment/paymentmethods4.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new PaymentReader(filePath).read();
@@ -58,7 +58,7 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void LimitNotFloat() {
+    public void limitNotFloat() {
         String filePath = "src/test/instances/Payment/paymentmethods5.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new PaymentReader(filePath).read();
@@ -67,7 +67,7 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void DiscountIsNegativeNumber() {
+    public void discountIsNegativeNumber() {
         String filePath = "src/test/instances/Payment/paymentmethods6.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new PaymentReader(filePath).read();
@@ -76,7 +76,7 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void LimitIsNegativeNumber() {
+    public void limitIsNegativeNumber() {
         String filePath = "src/test/instances/Payment/paymentmethods7.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new PaymentReader(filePath).read();
@@ -85,34 +85,34 @@ class PaymentReaderTest {
     }
 
     @Test
-    public void ProperPaymentsFile() {
+    public void properPaymentsFile() {
         PaymentReader reader = new PaymentReader(valid_payment_path);
         List<Payment> payments = reader.read();
 
         assertEquals(3, payments.size());
 
         Payment punkty = payments.stream()
-                .filter(p -> p.getId().equals("PUNKTY"))
+                .filter(p -> p.id().equals("PUNKTY"))
                 .findFirst()
                 .orElse(null);
         assertNotNull(punkty);
-        assertEquals(15, punkty.getDiscount());
-        assertEquals(100, punkty.getLimit());
+        assertEquals(15, punkty.discount());
+        assertEquals(100, punkty.limit());
 
         Payment mZysk = payments.stream()
-                .filter(p -> p.getId().equals("mZysk"))
+                .filter(p -> p.id().equals("mZysk"))
                 .findFirst()
                 .orElse(null);
         assertNotNull(mZysk);
-        assertEquals(10, mZysk.getDiscount());
-        assertEquals(180, mZysk.getLimit());
+        assertEquals(10, mZysk.discount());
+        assertEquals(180, mZysk.limit());
 
         Payment bosBankrut = payments.stream()
-                .filter(p -> p.getId().equals("BosBankrut"))
+                .filter(p -> p.id().equals("BosBankrut"))
                 .findFirst()
                 .orElse(null);
         assertNotNull(bosBankrut);
-        assertEquals(5, bosBankrut.getDiscount());
-        assertEquals(200, bosBankrut.getLimit());
+        assertEquals(5, bosBankrut.discount());
+        assertEquals(200, bosBankrut.limit());
     }
 }

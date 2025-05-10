@@ -12,7 +12,7 @@ class OrderReaderTest {
     String valid_orders_path = "src/test/instances/Orders/orders.json";
 
     @Test
-    public void OrdersNotTable(){
+    public void ordersNotTable(){
         String filePath = "src/test/instances/Orders/orders1.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();
@@ -22,7 +22,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void OrdersFileNotFound() {
+    public void ordersFileNotFound() {
         RuntimeException thrown = assertThrows(RuntimeException.class, () -> {
             new OrderReader("invalid_path.json").read();
         });
@@ -31,7 +31,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void OrdersMissingRequiredElement() {
+    public void ordersMissingRequiredElement() {
         String filePath = "src/test/instances/Orders/orders2.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();
@@ -40,7 +40,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void OrdersTooNanyElements() {
+    public void ordersTooNanyElements() {
         String filePath = "src/test/instances/Orders/orders3.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();
@@ -49,7 +49,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void ValueNotFloat() {
+    public void valueNotFloat() {
         String filePath = "src/test/instances/Orders/orders4.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();
@@ -58,7 +58,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void PromotionsNotInTable()
+    public void promotionsNotInTable()
     {
         String filePath = "src/test/instances/Orders/orders6.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
@@ -68,7 +68,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void ProperOrdersFile() {
+    public void properOrdersFile() {
         OrderReader reader = new OrderReader(valid_orders_path);
         List<Order> orders = reader.read();
 

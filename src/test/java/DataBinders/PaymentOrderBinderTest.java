@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PaymentOrderBinderTest {
 
     @Test
-    void BindAllOrdersToPointsPayment() {
+    void bindAllOrdersToPointsPayment() {
         OrderReader orderReader = new OrderReader("src/test/instances/Orders/orders.json");
         PaymentReader paymentReader = new PaymentReader("src/test/instances/Payment/paymentmethods.json");
 
@@ -26,7 +26,7 @@ class PaymentOrderBinderTest {
         List<PaymentWithOrders> result = binder.bind(payments,orders);
 
         PaymentWithOrders pointsBiding = result.stream()
-                .filter(pwo -> pwo.getPayment().getId().equals(Config.POINTS))
+                .filter(pwo -> pwo.getPayment().id().equals(Config.POINTS))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Points payment not found"));
 
@@ -50,8 +50,8 @@ class PaymentOrderBinderTest {
 
         for (PaymentWithOrders pwo : result) {
             for (Order order : pwo.getOrders()) {
-                if (!pwo.getPayment().getId().equals(Config.POINTS)) {
-                    assertTrue(order.promotions().contains(pwo.getPayment().getId()));
+                if (!pwo.getPayment().id().equals(Config.POINTS)) {
+                    assertTrue(order.promotions().contains(pwo.getPayment().id()));
                 }
             }
         }

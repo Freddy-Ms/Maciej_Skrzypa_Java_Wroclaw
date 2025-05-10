@@ -16,7 +16,7 @@ public class PaymentOrderBinder {
             List<Order> matchedOrders = new ArrayList<>();
 
             for(Order order : orders) {
-                if(Config.POINTS.equals(payment.getId())) {
+                if(Config.POINTS.equals(payment.id())) {
                     if(order.promotions() == null || !order.promotions().contains(Config.POINTS)) {
                         if(order.promotions() == null){
                             order.setPromotions(new ArrayList<>());
@@ -25,7 +25,7 @@ public class PaymentOrderBinder {
                     }
                     matchedOrders.add(order);
                 }
-                else if (order.promotions() != null && order.promotions().contains(payment.getId())) {
+                else if (order.promotions() != null && order.promotions().contains(payment.id())) {
                     matchedOrders.add(order);
                 }
             }

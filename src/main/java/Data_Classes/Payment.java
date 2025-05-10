@@ -3,11 +3,11 @@ package Data_Classes;
 public interface Payment {
     float calculateDiscount(float value);
 
-    public String getId();
+    public String id();
 
-    public float getDiscount();
+    public float discount();
 
-    public float getLimit();
+    public float limit();
 
     public boolean canPay(float value);
 

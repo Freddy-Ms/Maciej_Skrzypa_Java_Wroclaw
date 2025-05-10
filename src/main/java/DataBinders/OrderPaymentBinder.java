@@ -30,7 +30,7 @@ public class OrderPaymentBinder {
 
     private Payment findPaymentById(List<Payment> payments, String id) {
         return payments.stream()
-                .filter(p -> p.getId().equals(id))
+                .filter(p -> p.id().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Payment ID not found: " + id));
     }

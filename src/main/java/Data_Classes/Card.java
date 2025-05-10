@@ -12,17 +12,17 @@ public class Card implements Payment {
     }
 
     @Override
-    public String getId() {
+    public String id() {
         return id;
     }
 
     @Override
-    public float getDiscount() {
+    public float discount() {
         return discount;
     }
 
     @Override
-    public float getLimit() {
+    public float limit() {
         return limit;
     }
 
