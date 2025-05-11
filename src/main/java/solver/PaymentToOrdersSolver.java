@@ -15,19 +15,19 @@ public class PaymentToOrdersSolver implements Solver<PaymentWithOrders, Order> {
     public Map<String, Float> solve(List<PaymentWithOrders> paymentsWithOrders, List<Order> orders) {
         Map<String, Float> result = new HashMap<>();
 
-        paymentsWithOrders.sort((p1, p2) -> Float.compare(p2.getPayment().limit(), p1.getPayment().limit()));
+        paymentsWithOrders.sort((p1, p2) -> Float.compare(p2.payment().limit(), p1.payment().limit()));
 
         for (PaymentWithOrders pwo : paymentsWithOrders) {
-            pwo.getOrders().sort((o1, o2) -> Float.compare(o2.value(), o1.value()));
+            pwo.orders().sort((o1, o2) -> Float.compare(o2.value(), o1.value()));
 
-            for (Order order : pwo.getOrders()) {
+            for (Order order : pwo.orders()) {
                 if (order == null || order.value() == 0) continue;
 
-                float amountToPay = order.value() - pwo.getPayment().calculateDiscount(order.value());
-                if (pwo.getPayment().limit() >= amountToPay) {
-                    pwo.getPayment().pay(amountToPay);
+                float amountToPay = order.value() - pwo.payment().calculateDiscount(order.value());
+                if (pwo.payment().limit() >= amountToPay) {
+                    pwo.payment().pay(amountToPay);
                     order.buy();
-                    result.put(pwo.getPayment().id(), result.getOrDefault(pwo.getPayment().id(), 0.0f) + amountToPay);
+                    result.put(pwo.payment().id(), result.getOrDefault(pwo.payment().id(), 0.0f) + amountToPay);
                     break;
                 }
             }
@@ -39,7 +39,7 @@ public class PaymentToOrdersSolver implements Solver<PaymentWithOrders, Order> {
             if (order.value() == 0) continue;
 
             Payment pointsPayment = paymentsWithOrders.stream()
-                    .map(PaymentWithOrders::getPayment)
+                    .map(PaymentWithOrders::payment)
                     .filter(p -> p.id().equals(Config.POINTS))
                     .findFirst()
                     .orElse(null);
@@ -111,7 +111,7 @@ public class PaymentToOrdersSolver implements Solver<PaymentWithOrders, Order> {
 
     private void payRemaining(Order order, Map<String, Float> result, List<PaymentWithOrders> paymentsWithOrders, boolean excludePoints) {
         for (PaymentWithOrders pwo : paymentsWithOrders) {
-            Payment payment = pwo.getPayment();
+            Payment payment = pwo.payment();
             if (order.value() > 0 && payment.limit() > 0) {
                 if (excludePoints && payment.id().equals(Config.POINTS)) {
                     continue;

@@ -14,11 +14,11 @@ public class PaymentWithOrders {
         this.orders = orders;
     }
 
-    public Payment getPayment() {
+    public Payment payment() {
         return payment;
     }
 
-    public List<Order> getOrders() {
+    public List<Order> orders() {
         return orders;
     }
 }
