@@ -160,5 +160,10 @@ Drugi algorytm zachłanny pracuje na innej strukturze danych, w której podstaw�
 4. **Ostateczne pokrycie brakujących kwot**:
    - Jeśli po wykorzystaniu najlepszych metod i punktów pozstaje jeszcze jakaś część zamówienia do opłacenia:
        - Próbujemy opłacić pozostała kwotę dowolnymi dostępnymi metodami płatności
-       - Możemy wyłączyć dalsze używanie punktów w tej fazie           
+       - Możemy wyłączyć dalsze używanie punktów w tej fazie
+## Cechy algorytmów:
+- **Maksymalizacja rabatów** - próba pełnego opłacenia zamówienia metodą dającą największy zysk
+- **Strategiczne użycie punktów** - punkty używane najpierw są do ozyskania dodatkowego rabatu 10%.
+- Ostateczne pokrycie zamówienia dowolnymi dostępnymi metodami płatności.
+- Unikanie podwójnego wykorzystania punktów, jeśli nie jest to efektywne
 
