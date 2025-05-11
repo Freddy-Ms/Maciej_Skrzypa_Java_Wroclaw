@@ -74,13 +74,13 @@ Opis:
 ## 5. Klasy, które łączą ze sobą powiązane dane
 W projekcie powstały dwie klasy odpowiedzialne za mapowanie powiązań pomiędzy zamówieniami a metodami płatności: `OrderToPayments` oraz `PaymentToOrders`.
 Każda z tych klas jako argumenty przyjmuje listy:
-- zamówień (`List<Order>)
+- zamówień (`List<Order>`)
 - metod płatności (`List<Payment>`),
 które zostały uprzednio odczytane i przetworzone.
 
 **Działanie klas**:
 - **OrderToPayments**
-  W tej klasie iterujemy po każdym zamówieniu z osobna. Dla każdego zamówienia sprawdzamy, czy ma przypisane promocje. Jeśli tak, przeszukujemy całą listę metod płatności. Gdy identyfikator pormocji (`promotion.id) odpowiada idetyfiaktorowi metody płatności (`payment.id'), wiążemy te dwa obiekty ze sobą.
+  W tej klasie iterujemy po każdym zamówieniu z osobna. Dla każdego zamówienia sprawdzamy, czy ma przypisane promocje. Jeśli tak, przeszukujemy całą listę metod płatności. Gdy identyfikator pormocji (`promotion.id`) odpowiada idetyfiaktorowi metody płatności (`payment.id`), wiążemy te dwa obiekty ze sobą.
 - **PaymentToOrders**
   Tutaj działanie jest odwrotne. Iterujemy po każdej metodzie płatności. Dla każdej z nich sprawdzamy wszystkie zamówienia i, jeśli dane zamówienia posiada promocję odpowiadającą aktualnej metodzie płatnosći, tworzymy odpowiednie powiązanie.
 
@@ -209,8 +209,25 @@ Przeprowadzono testy:
 - **Poprawne przypisanie zamówień do metod płatności**:
   Upewniano się, że dla każdej metody płatności zamówienia zostały przypisane tylko wtedy, gdy zawierały w pormocjach odpowiedni identyfikator metody.
 
+## Solvery
 
+Dla przykładu podanego w zadaniu sprawdzono poprawność działania solverów.
 
+Każdy solver był testowany poprzez porównanie jego wyniku z oczekiwanym rzeultatem.
+W szczególności sprawdzano:
+- Czy wynik zwrócony przez solver jest zgdony w cześniej wyliczonym oczekiwanym rezultatem.
+- Czy zamówienia został prawidłowo obsłużone zgdonie z założeniami algorytmu.
+
+## 8. Wywoływanie pliku jar
+
+Proces wywoływania pliku JAR jest zgodny z wymaganiami przedstawionymi w treści zadania.
+
+Po uruchomieniu programu wyknowywane są oba algorytmy rozwiązujące, a następnie wybeirane jest lepsze rozwiązanie według określonych kryteriów:
+- Priorytetem jest mniejsza suma zapłaconej kwoty - rozwiązanie o niższym koszcie jest uznawane za lepsze
+- W przypadku remisu (takiej samej sumarycznej kwoty) - porównywana jest liczba wykorzystanych punktów. Rozwiązanie, które wykorzystało więcej punktów, jest uznawane za korzystniejsze.
+- Jeśli oba rowiązania mają zarówno tę samą kwotę, jak i taką samą liczbę użytych punktów, wtedy:
+    - Program wyświetla komunikat, że oba rozwiązania są dopuszczalne.
+    - Obydwa wyniki zostają wypisane na ekran. 
 
 
 
