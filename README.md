@@ -167,3 +167,50 @@ Drugi algorytm zachłanny pracuje na innej strukturze danych, w której podstaw�
 - Ostateczne pokrycie zamówienia dowolnymi dostępnymi metodami płatności.
 - Unikanie podwójnego wykorzystania punktów, jeśli nie jest to efektywne
 
+## 7. Testy
+
+Kluczowe elementy programu zostały dokładnie przetestowane.
+
+## Testy odczytu plików JSON
+
+Pierwszym krytycznym elementem, który został objęty testami, były klasy odpowiedzialne za odczyt danych z plików JSON.
+
+W celu przetestowania poprawności walidacji i prasowania plików, przygotowano zmodyfikowane (celowo uszkodzone) wersje plików `orders.json` i `payments.json`.
+
+**Wspólne przypadki testowe dla obu plików**:
+- Brak tablicy głównej w pliku
+- Brak pliku na podanej ścieżce
+- Brak wymaganego pola w którymkolwiek z elementów
+- Obecność więcej niż trzech elementów w jednym węźle (node)
+- Wartości liczbowe mniejsze lub równe 0
+- Nieprawidłowy typ danych  (np. tekst zamiast liczby)
+- Sprawdzenie poprawności odczytu danych z prawidłowego pliku
+
+## Testy wiązania ze sobą danych
+
+Kolejnym kluczowym elementem objętym testami była poprawność łączenia danych zamówień i mteod płatności. 
+Testowano główne komponenty:
+## OrderToPayments
+Sprawdzano wiązanie zamówień (`Order`) z opdowiednimi metodami płatnmości (`Payment`) na podstawie ich identyfikatorów.
+
+Przeprowadzone testy:
+- **Brak pasującej metody płatności**:
+  Upewniano się, że jeśli dla zamówienia wskazano nieistniejący identyfikator metody płatności, to zostanie rzucony wyjątek.
+- **Poprawne powiązanie zamówień z promocjami**:
+  Weryfikowano, że każda promocja przypisana do zamówienia faktycznie istnieje na liście dostępnych metod płatności.
+
+
+## PaymentToOrders
+Sprawdzono poprawność odwrotnego powiązania - przypisanie zamówień (`Order`) do metod płątności (`Payment`).
+
+Przeprowadzono testy:
+- **Powiązanie wszystkich zamówień z płatnością punktami**:
+  Weryfikowano, zę każde zamówienie zostało powiązane z płatnością typu punkty, jeżeli taka metoda jest dostępna.
+- **Poprawne przypisanie zamówień do metod płatności**:
+  Upewniano się, że dla każdej metody płatności zamówienia zostały przypisane tylko wtedy, gdy zawierały w pormocjach odpowiedni identyfikator metody.
+
+
+
+
+
+
