@@ -33,6 +33,8 @@ public class PaymentToOrdersSolver implements Solver<PaymentWithOrders, Order> {
             }
         }
 
+        orders.sort((o1, o2) -> Float.compare(o2.value(), o1.value()));
+
         for (Order order : orders) {
             if (order.value() == 0) continue;
 
