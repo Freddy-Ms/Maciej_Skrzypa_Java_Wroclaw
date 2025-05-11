@@ -98,7 +98,7 @@ W projekcie zaimplementowano dwa algorytmy zachłanne rozwiązujące problem opt
 
 Poniżej opisano działanie `PaymentToOrdersSolver`
 
-## Algorytm
+## Algorytm nr 1
 
 **Argumenty wejściowe**:
 - Lista powiązań płatności z zamówieniami (`List<PaymentWithOrders>`)
@@ -127,5 +127,38 @@ Poniżej opisano działanie `PaymentToOrdersSolver`
   - Funkcja próbująca opłacić zamówienie dowolnyim dostępnymi metodami płatności.
   - Można wyłączyć płatności punktami, aby priorytetowo korzystać z innych źródeł.
 
- 
+ ## Algorytm nr 2
+Drugi algorytm zachłanny pracuje na innej strukturze danych, w której podstawą są zamówienia i przypisane do nich metody płatności.
+
+**Dane wejściowe**:
+- Lista powiązań zamówień z promocjami (`List<OrderWithPromotions>`)
+- Lista wszystkich dostępnych metod płatności (`List<Payment>`)
+
+**Główne kroki algorytmu**:
+1. **Sortowanie zamówień**:
+   - Zamówienia są sortowane malejąco według ich wartości
+2. **Pierwsza faza -  przypisanie płatności do zamówień**:
+   - Dla każdego zamówienia:
+       - Sortujemy dostępne dla niego metody płatności malejąco według wartości zniżki
+       - Następnie próbujemy opłacić zamówienie wybraną metodą:
+           - Jeśli metoda płatności pozwala na pełne pokrycie zamówienia (po uwzględnieniu rabatu), opłacamy zamówienie tą metodą i rejstrujemy płatność.
+           - Jeśli pełne pokrycie nie jest możliwe, przechodzimy do kolejnego zamówienia
+   - Celem tej fazy jest maksymalne wykorzystanie najlepszych dostępnych rabatów.
+3. **Druga faza - wykorzystanie punktów**:
+   - Iterujemy ponownie po wszystkich zamówieniach.
+   - Dla każdego zamówienia, które nie zostało jeszcze w pełni opłacone:
+       - Sprawdzamy, czy mamy dostępną metodę płatności punktami.
+       - Obliczamy 10% wartości zamówienia i sprawdzamy, czy dostępne punkty pozwalają na ich pokrycie
+       - Jeśli tak:
+           - Przyznajemy zamówieniu rabat 10%.
+           - Opłacamy 10% wartości punktami.
+           - Symulujemy, czy pozostałe punkty mogą zostać użyte do uzyskanioa rabatu w innych zamówieniach:
+               - Jeśli tak - płacimy tylko 10% aktualnego zamówienia.
+               - Jeśli nie - płacimy wszystkie dostępne punkty za aktualne zamówienie i ewnetualnie dopłacamy pozostałą kwotę innymi metodami. 
+       - Jeśli punktów jest za mało:
+           - Szukamy innego zamówienia, w którym dostepne punkty pozwolą pokryć 10% wartości i przyznać rabat
+4. **Ostateczne pokrycie brakujących kwot**:
+   - Jeśli po wykorzystaniu najlepszych metod i punktów pozstaje jeszcze jakaś część zamówienia do opłacenia:
+       - Próbujemy opłacić pozostała kwotę dowolnymi dostępnymi metodami płatności
+       - Możemy wyłączyć dalsze używanie punktów w tej fazie           
 
