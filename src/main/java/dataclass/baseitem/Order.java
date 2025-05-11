@@ -4,7 +4,7 @@ import java.util.List;
 
 
 public class Order {
-    private String id;
+    private final String id;
     private float value;
     private List<String> promotions;
 
@@ -13,35 +13,37 @@ public class Order {
         this.value = value;
         this.promotions = promotions;
     }
+
     public Order(String id, float value) {
         this.id = id;
         this.value = value;
     }
+
     public void setPromotions(List<String> promotions) {
         this.promotions = promotions;
     }
 
-    public String id(){
+    public String id() {
         return id;
     }
 
-    public float value(){
+    public float value() {
         return value;
     }
 
-    public List<String> promotions(){
+    public List<String> promotions() {
         return promotions;
     }
 
-    public void buy(){
+    public void buy() {
         this.value = 0;
     }
 
-    public void pay(float value){
+    public void pay(float value) {
         this.value -= value;
     }
 
-    public void discount(){
+    public void discount() {
         this.value -= this.value * 0.1f;
     }
 }

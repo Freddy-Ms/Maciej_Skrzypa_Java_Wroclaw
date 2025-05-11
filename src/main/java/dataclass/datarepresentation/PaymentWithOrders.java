@@ -6,8 +6,8 @@ import dataclass.baseitem.Payment;
 import java.util.List;
 
 public class PaymentWithOrders {
-    private Payment payment;
-    private List<Order> orders;
+    private final Payment payment;
+    private final List<Order> orders;
 
     public PaymentWithOrders(Payment payment, List<Order> orders) {
         this.payment = payment;

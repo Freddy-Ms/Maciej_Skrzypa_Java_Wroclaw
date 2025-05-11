@@ -13,20 +13,19 @@ public class PaymentToOrders {
     public List<PaymentWithOrders> bind(List<Payment> payments, List<Order> orders) {
         List<PaymentWithOrders> paymentWithOrders = new ArrayList<>();
 
-        for(Payment payment : payments) {
+        for (Payment payment : payments) {
             List<Order> matchedOrders = new ArrayList<>();
 
-            for(Order order : orders) {
-                if(Config.POINTS.equals(payment.id())) {
-                    if(order.promotions() == null || !order.promotions().contains(Config.POINTS)) {
-                        if(order.promotions() == null){
+            for (Order order : orders) {
+                if (Config.POINTS.equals(payment.id())) {
+                    if (order.promotions() == null || !order.promotions().contains(Config.POINTS)) {
+                        if (order.promotions() == null) {
                             order.setPromotions(new ArrayList<>());
                         }
                         order.promotions().add(Config.POINTS);
                     }
                     matchedOrders.add(order);
-                }
-                else if (order.promotions() != null && order.promotions().contains(payment.id())) {
+                } else if (order.promotions() != null && order.promotions().contains(payment.id())) {
                     matchedOrders.add(order);
                 }
             }

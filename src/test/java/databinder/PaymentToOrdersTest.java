@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PaymentToOrdersTest {
 
@@ -24,20 +25,21 @@ class PaymentToOrdersTest {
 
         PaymentToOrders binder = new PaymentToOrders();
 
-        List<PaymentWithOrders> result = binder.bind(payments,orders);
+        List<PaymentWithOrders> result = binder.bind(payments, orders);
 
         PaymentWithOrders pointsBiding = result.stream()
                 .filter(pwo -> pwo.getPayment().id().equals(Config.POINTS))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Points payment not found"));
 
-        assertEquals(orders.size(),pointsBiding.getOrders().size());
+        assertEquals(orders.size(), pointsBiding.getOrders().size());
 
         pointsBiding.getOrders().forEach(order -> {
             assertTrue(order.promotions().contains(Config.POINTS));
         });
 
     }
+
     @Test
     void ordersCorrectlyAssignedToMatchingPayments() {
         OrderReader orderReader = new OrderReader("src/test/instances/Orders/orders.json");

@@ -1,7 +1,8 @@
 package databinder;
+
 import dataclass.baseitem.Order;
-import dataclass.datarepresentation.OrderWithPromotions;
 import dataclass.baseitem.Payment;
+import dataclass.datarepresentation.OrderWithPromotions;
 import org.example.Config;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class OrderToPayments {
         for (Order order : orders) {
             List<Payment> boundedPromotions = new ArrayList<>();
 
-            if(order.promotions() != null && !order.promotions().isEmpty()) {
+            if (order.promotions() != null && !order.promotions().isEmpty()) {
                 for (String paymentID : order.promotions()) {
                     Payment matchingPayment = findPaymentById(payments, paymentID);
                     boundedPromotions.add(matchingPayment);

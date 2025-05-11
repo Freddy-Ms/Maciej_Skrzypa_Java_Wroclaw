@@ -7,7 +7,7 @@ import java.util.List;
 public class OrderWithPromotions {
     private final String id;
     private float value;
-    private List<Payment> promotions;
+    private final List<Payment> promotions;
 
     public OrderWithPromotions(String id, float value, List<Payment> promotions) {
         this.id = id;
@@ -35,7 +35,7 @@ public class OrderWithPromotions {
         this.value -= this.value * 0.1f;
     }
 
-    public void bought(){
+    public void bought() {
         this.value = 0;
     }
 

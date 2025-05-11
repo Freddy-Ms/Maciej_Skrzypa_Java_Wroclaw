@@ -1,13 +1,15 @@
 package solver;
 
-import dataclass.datarepresentation.PaymentWithOrders;
 import dataclass.baseitem.Order;
 import dataclass.baseitem.Payment;
+import dataclass.datarepresentation.PaymentWithOrders;
 import org.example.Config;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class PaymentWithOrdersSolver implements Solver<PaymentWithOrders, Order> {
+public class PaymentToOrdersSolver implements Solver<PaymentWithOrders, Order> {
 
     @Override
     public Map<String, Float> solve(List<PaymentWithOrders> paymentsWithOrders, List<Order> orders) {

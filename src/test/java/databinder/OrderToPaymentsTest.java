@@ -1,17 +1,18 @@
 package databinder;
 
-import dataclass.datarepresentation.OrderWithPromotions;
-import dataclass.baseitem.Payment;
 import dataclass.baseitem.Order;
+import dataclass.baseitem.Payment;
+import dataclass.datarepresentation.OrderWithPromotions;
 import filereader.OrderReader;
 import filereader.PaymentReader;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class OrderPaymentBinderTest {
+class OrderToPaymentsTest {
     OrderToPayments binder = new OrderToPayments();
 
     @Test
@@ -22,7 +23,7 @@ class OrderPaymentBinderTest {
         List<Order> orders = orderReader.read();
         List<Payment> payments = paymentReader.read();
 
-        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class,() -> {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             binder.bind(orders, payments);
         });
 
@@ -30,8 +31,7 @@ class OrderPaymentBinderTest {
     }
 
     @Test
-    void bindOrdersWithPromotionsAndAddPoints()
-    {
+    void bindOrdersWithPromotionsAndAddPoints() {
         OrderReader orderReader = new OrderReader("src/test/instances/Orders/orders.json");
         PaymentReader paymentReader = new PaymentReader("src/test/instances/Payment/paymentmethods.json");
 
@@ -39,10 +39,10 @@ class OrderPaymentBinderTest {
         List<Payment> payments = paymentReader.read();
 
         List<OrderWithPromotions> boundedOrders = binder.bind(orders, payments);
-        for(OrderWithPromotions order : boundedOrders) {
+        for (OrderWithPromotions order : boundedOrders) {
             List<Payment> orderPromotions = order.promotions();
 
-            for(Payment promotion : orderPromotions) {
+            for (Payment promotion : orderPromotions) {
                 assertTrue(payments.contains(promotion));
             }
         }

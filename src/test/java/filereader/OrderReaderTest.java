@@ -12,7 +12,7 @@ class OrderReaderTest {
     String valid_orders_path = "src/test/instances/Orders/orders.json";
 
     @Test
-    public void ordersNotArray(){
+    public void ordersNotArray() {
         String filePath = "src/test/instances/Orders/orders1.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();
@@ -58,8 +58,7 @@ class OrderReaderTest {
     }
 
     @Test
-    public void promotionsNotInArray()
-    {
+    public void promotionsNotInArray() {
         String filePath = "src/test/instances/Orders/orders6.json";
         IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
             new OrderReader(filePath).read();

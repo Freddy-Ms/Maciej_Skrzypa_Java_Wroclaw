@@ -1,16 +1,39 @@
 package dataclass.baseitem;
 
-public interface Payment {
+public class Payment {
 
-    float calculateDiscount(float value);
+    private final String id;
+    private final float discount;
+    private float limit;
 
-    public String id();
+    public Payment(String id, float discount, float limit) {
+        this.id = id;
+        this.discount = discount;
+        this.limit = limit;
+    }
 
-    public float discount();
+    public String id() {
+        return id;
+    }
 
-    public float limit();
 
-    public void pay(float value);
+    public float discount() {
+        return discount;
+    }
+
+
+    public float limit() {
+        return limit;
+    }
+
+
+    public float calculateDiscount(float value) {
+        return this.discount * value / 100;
+    }
+
+
+    public void pay(float value) {
+        this.limit -= value;
+    }
 
 }
-

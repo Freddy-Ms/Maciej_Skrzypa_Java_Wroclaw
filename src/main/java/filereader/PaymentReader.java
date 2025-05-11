@@ -1,18 +1,14 @@
 package filereader;
 
-import dataclass.baseitem.Card;
-import dataclass.baseitem.Payment;
-import dataclass.baseitem.Points;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.example.Config;
+import dataclass.baseitem.Payment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentReader extends FileReader<List<Payment>> {
 
-    public PaymentReader(String filename)
-    {
+    public PaymentReader(String filename) {
         super(filename);
     }
 
@@ -41,10 +37,10 @@ public class PaymentReader extends FileReader<List<Payment>> {
         String id = node.get("id").asText();
         float discount;
         float limit;
-        try{
+        try {
             discount = Float.parseFloat(node.get("discount").asText());
             limit = Float.parseFloat(node.get("limit").asText());
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid value");
         }
 
@@ -52,11 +48,8 @@ public class PaymentReader extends FileReader<List<Payment>> {
         if (discount <= 0 || limit <= 0)
             throw new IllegalArgumentException("Discount and limit must be greater than 0");
 
+        return new Payment(id, discount, limit);
 
-        if (Config.POINTS.equals(id))
-            return new Points(id, discount, limit);
-        else
-            return new Card(id, discount, limit);
 
     }
 }
